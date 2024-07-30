@@ -2,7 +2,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
 
 body {
   color: rgb(var(--foreground-rgb));
@@ -185,7 +184,7 @@ body {
 }
 
 .quantity-desc .num{
-   font-size: 20px;
+  font-size: 20px;
 }
 
 .quantity-desc .plus{
@@ -229,3 +228,62 @@ body {
 
 /* CART ENDS */
 
+
+.box-form{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  height: auto;
+  background-color: #fff;
+  margin: 20px;
+
+}
+
+.datos-de-compra{
+  
+  background-color: #666;
+  color: #fff;
+  padding:0 47px ;
+  font-size: 23px;
+
+}
+
+.nombres {
+  margin: 20px;
+}
+.correo{
+  margin: 20px;
+}
+.celular{
+  margin: 20px;
+
+}
+.cedula{
+  margin: 20px;
+
+}
+.enviar-datos{
+  box-sizing: border-box;
+  background-color: #999;
+  color: #fff;
+  padding: 10px;
+  width: 85%;
+  margin: 20px;
+  border: none;
+}
+.enviar-datos:hover{
+  background-color: #555;
+}
+.enviar-datos:active{
+  background-color: #222;
+}
+.datos{
+  border: none;
+  border-bottom: 1px solid #666;
+  width: 97%; 
+}
+.requerimento{
+  color: #f00;
+}

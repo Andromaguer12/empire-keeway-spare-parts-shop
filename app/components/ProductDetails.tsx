@@ -5,13 +5,15 @@ import Image from 'next/image'
 import React, { useContext, useState } from 'react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { CartContext } from '../context/CartContext';
+import Modal from './form-compra';
 
 const ProductDetails = ({product}:any) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [index,setIndex] = useState(0);
     const { cartItems, addProduct, qty, decQty, incQty}:any = useContext(CartContext);
-    // console.log(cartItems);
+    console.log(cartItems);
+return (
     
-  return (
     <div className='product-details-section'>
         <div className='product-details-container'>
 
@@ -75,8 +77,10 @@ const ProductDetails = ({product}:any) => {
                 <button className='btn add-to-cart'
                     onClick={()=>addProduct(product,qty)}
                 >
-                    Add To Cart
+                    anadicion
                 </button>
+                <button className='btn add-to-cart' onClick={() => setIsModalOpen(true)}>Abrir Modal</button>
+<Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)} />
 
 
             </div> 
@@ -85,7 +89,7 @@ const ProductDetails = ({product}:any) => {
         
         
     </div>
-  )
+)
 }
 
 export default ProductDetails

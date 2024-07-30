@@ -1,3 +1,4 @@
+
 import React, { useContext } from 'react'
 import { AiOutlineLeft, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti'
@@ -15,7 +16,7 @@ const Cart = () => {
 
   const handleCheckout = async () => {
     try {
-        const response = await fetch('/api/checkout',{
+        const response = await fetch('/api/checkout',{//para que funcione en el servidor eliminar:http://localhost:3000
           method:'POST',
           headers:{
             "Content-Type":"application/json"
@@ -66,7 +67,7 @@ const Cart = () => {
                               <AiOutlineMinus />
                             </span>
                             <span className='num'>
-                             {product.quantity}
+                          {product.quantity}
                             </span>
                             <span className='plus' onClick={()=> toggleCartItemQty(product._id,'plus')}>
                               <AiOutlinePlus />
