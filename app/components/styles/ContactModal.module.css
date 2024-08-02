@@ -19,6 +19,12 @@
   position: relative;
 }
 
+.modal h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
 .closeButton {
   position: absolute;
   top: 10px;
@@ -31,6 +37,19 @@
 
 .formGroup {
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  margin-bottom: 5px;
+}
+
+.field {
+  width: 100%;
+  border: 1px solid #e7e7e7;
+  border-radius: 4px;
+  padding: 5px 10px;
 }
 
 .error {
@@ -53,4 +72,5 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  width: 100%;
 }

@@ -100,17 +100,17 @@ const Cart = () => {
             </div>
             <div className="btn-container">
               <button
-                onClick={handleCheckout}
+                onClick={() => setShowModal(true)}
                 type="button"
                 className="checkout-btn"
               >
-                Pay with stripe
+                Process Order
               </button>
             </div>
           </div>
         )}
       </div>
-      <Modal isOpen={showModal} onClose={() => setShowCart(false)} />
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 };

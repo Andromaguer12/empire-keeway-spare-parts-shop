@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styles from "./styles/ContactModal.module.css";
+import Swal from "sweetalert2";
 
 const Modal = ({ isOpen, onClose }) => {
   const [submitError, setSubmitError] = useState("");
@@ -18,30 +19,35 @@ const Modal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     console.log(values);
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/create-order`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      );
+    Swal.fire({
+      title: "Muchas gracias!",
+      text: "Para continuar con tu orden por favor ingresa a este chat de whatsapp: https://wa.me/123",
+      icon: "success",
+    });
+    // try {
+    //   const response = await fetch(
+    //     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/create-order`,
+    //     {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(values),
+    //     }
+    //   );
 
-      if (!response.ok) {
-        throw new Error("Error al enviar el formulario");
-      }
+    //   if (!response.ok) {
+    //     throw new Error("Error al enviar el formulario");
+    //   }
 
-      const data = await response.json();
-      console.log(data);
-      setSubmitError("");
-    } catch (error) {
-      setSubmitError("Hubo un problema al enviar el formulario.");
-    } finally {
-      setSubmitting(false);
-    }
+    //   const data = await response.json();
+    //   console.log(data);
+    //   setSubmitError("");
+    // } catch (error) {
+    //   setSubmitError("Hubo un problema al enviar el formulario.");
+    // } finally {
+    //   setSubmitting(false);
+    // }
   };
 
   return (
@@ -50,7 +56,7 @@ const Modal = ({ isOpen, onClose }) => {
         <button className={styles.closeButton} onClick={onClose}>
           X
         </button>
-        <h2>Formulario</h2>
+        <h2>Información necesaria</h2>
         <Formik
           initialValues={{ name: "", ci: "", phone_number: "", email: "" }}
           validationSchema={validationSchema}
@@ -60,7 +66,7 @@ const Modal = ({ isOpen, onClose }) => {
             <Form>
               <div className={styles.formGroup}>
                 <label htmlFor="name">Nombre Completo</label>
-                <Field name="name" type="text" />
+                <Field className={styles.field} name="name" type="text" />
                 <ErrorMessage
                   name="name"
                   component="div"
@@ -69,7 +75,7 @@ const Modal = ({ isOpen, onClose }) => {
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="ci">Cédula de Identidad</label>
-                <Field name="ci" type="text" />
+                <Field className={styles.field} name="ci" type="text" />
                 <ErrorMessage
                   name="ci"
                   component="div"
@@ -78,7 +84,11 @@ const Modal = ({ isOpen, onClose }) => {
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="phone_number">Número de Teléfono</label>
-                <Field name="phone_number" type="text" />
+                <Field
+                  className={styles.field}
+                  name="phone_number"
+                  type="text"
+                />
                 <ErrorMessage
                   name="phone_number"
                   component="div"
@@ -87,7 +97,7 @@ const Modal = ({ isOpen, onClose }) => {
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="email">Email</label>
-                <Field name="email" type="email" />
+                <Field className={styles.field} name="email" type="email" />
                 <ErrorMessage
                   name="email"
                   component="div"
