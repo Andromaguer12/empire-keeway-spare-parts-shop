@@ -15,6 +15,7 @@ const Cart = () => {
     cartItems,
     showCart,
     setShowCart,
+    clearCart,
   }: any = useContext(CartContext);
   const [showModal, setShowModal] = useState(false);
 
@@ -110,7 +111,12 @@ const Cart = () => {
           </div>
         )}
       </div>
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)} />
+      <Modal
+        items={cartItems}
+        isOpen={showModal}
+        total={totalPrice}
+        onClose={() => setShowModal(false)}
+      />
     </div>
   );
 };

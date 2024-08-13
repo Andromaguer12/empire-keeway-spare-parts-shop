@@ -36,3 +36,20 @@
 .table tr:hover {
   background-color: #f1f1f1;
 }
+
+.header {
+  width: 100%;
+  padding: 30px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.header > button {
+  background-color: green;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 15px;
+}

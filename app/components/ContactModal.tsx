@@ -1,12 +1,15 @@
 // components/Modal.js
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styles from "./styles/ContactModal.module.css";
 import Swal from "sweetalert2";
+import { CartContext } from "../context/CartContext";
 
-const Modal = ({ isOpen, onClose }) => {
+const Modal = ({ isOpen, onClose, items, total }) => {
   const [submitError, setSubmitError] = useState("");
+
+  const { clearCart }: any = useContext(CartContext);
 
   if (!isOpen) return null;
 
@@ -18,36 +21,49 @@ const Modal = ({ isOpen, onClose }) => {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    console.log(values);
-    Swal.fire({
-      title: "Muchas gracias!",
-      text: "Para continuar con tu orden por favor ingresa a este chat de whatsapp: https://wa.me/123",
-      icon: "success",
-    });
-    // try {
-    //   const response = await fetch(
-    //     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/create-order`,
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(values),
-    //     }
-    //   );
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/orders`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            client: values,
+            total,
+            items: items.map((d) => {
+              return {
+                item_id: d._id,
+                quantity: d.quantity ?? 0,
+              };
+            }),
+          }),
+        }
+      );
 
-    //   if (!response.ok) {
-    //     throw new Error("Error al enviar el formulario");
-    //   }
+      if (!response.ok) {
+        throw new Error("Error al enviar el formulario");
+      }
 
-    //   const data = await response.json();
-    //   console.log(data);
-    //   setSubmitError("");
-    // } catch (error) {
-    //   setSubmitError("Hubo un problema al enviar el formulario.");
-    // } finally {
-    //   setSubmitting(false);
-    // }
+      // const data = await response.json();
+
+      Swal.fire({
+        title: "Muchas gracias!",
+        text: "Para continuar con tu orden por favor ingresa a este chat de whatsapp: https://wa.me/123",
+        icon: "success",
+        didClose: () => {
+          onClose();
+          clearCart();
+        },
+      });
+
+      setSubmitError("");
+    } catch (error) {
+      setSubmitError("Hubo un problema al enviar el formulario.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (

@@ -3,19 +3,46 @@
 import { useState } from "react";
 import styles from "./styles/LoginForm.module.css";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const [submitError, setSubmitError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí iría la lógica para manejar el login
-    console.log("Email:", email);
-    console.log("Password:", password);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
 
-    router.push("/orders");
+      const responsejson = await response.json();
+
+      if (!response.ok) {
+        setSubmitError(responsejson?.message);
+        throw new Error(responsejson?.message);
+      }
+
+      document.cookie = `access_token=${responsejson.token}; path=/; secure; samesite=strict;`;
+
+      router.push("/orders");
+
+      setSubmitError("");
+    } catch (error) {
+      setSubmitError("Hubo un problema al enviar el formulario.");
+    }
   };
 
   return (
@@ -48,6 +75,7 @@ const LoginForm = () => {
             required
           />
         </div>
+        {submitError && <div className={styles.error}>{submitError}</div>}
         <button type="submit" className={styles.button}>
           Login
         </button>
